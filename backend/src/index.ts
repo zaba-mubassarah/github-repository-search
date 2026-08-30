@@ -16,7 +16,7 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.get('/api/search', async (req, res) => {
+app.get('/api/repositories', async (req, res) => {
   const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
   const page = Number(req.query.page ?? 1);
   const perPage = Number(req.query.perPage ?? 10);

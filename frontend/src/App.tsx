@@ -81,7 +81,7 @@ function App() {
       setError('');
 
       try {
-        const response = await axios.get(`${API_BASE_URL}/search`, {
+        const response = await axios.get(`${API_BASE_URL}/repositories`, {
           params: {
             q: debouncedQuery,
             page,
