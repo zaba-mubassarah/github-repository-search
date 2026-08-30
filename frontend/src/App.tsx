@@ -111,6 +111,7 @@ function App() {
   }, [debouncedQuery, page]);
 
   const totalPages = useMemo(() => Math.max(data.totalPages, 1), [data.totalPages]);
+  const normalizedPage = Math.min(Math.max(page, 1), totalPages);
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -118,7 +119,7 @@ function App() {
   };
 
   const handlePageChange = (_event: unknown, value: number) => {
-    setPage(value);
+    setPage(Math.min(Math.max(value, 1), totalPages));
   };
 
   return (
@@ -201,7 +202,7 @@ function App() {
               <Box display="flex" justifyContent="center" pt={2}>
                 <Pagination
                   count={totalPages}
-                  page={page - 1}
+                  page={normalizedPage}
                   onChange={handlePageChange}
                   color="primary"
                 />
