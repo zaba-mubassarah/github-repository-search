@@ -72,6 +72,7 @@ function App() {
 
     const fetchRepositories = async () => {
       if (!debouncedQuery) {
+        setLoading(false);
         setData(defaultResponse);
         setError('');
         return;
