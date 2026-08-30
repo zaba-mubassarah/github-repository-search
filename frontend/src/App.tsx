@@ -28,6 +28,7 @@ type Repository = {
   html_url: string;
   stargazers_count: number;
   language: string | null;
+  updated_at: string;
   owner: {
     login: string;
     avatar_url: string;
@@ -51,12 +52,12 @@ const defaultResponse: SearchResponse = {
 };
 
 function App() {
-  const [query, setQuery] = useState('react');
+  const [query, setQuery] = useState('laravel');
   const [page, setPage] = useState(1);
   const [data, setData] = useState<SearchResponse>(defaultResponse);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('react');
+  const [debouncedQuery, setDebouncedQuery] = useState('laravel');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -181,6 +182,14 @@ function App() {
 
                         <Typography variant="body2" color="text.secondary">
                           {repo.description ?? 'No description provided.'}
+                        </Typography>
+
+                        <Typography variant="caption" color="text.secondary">
+                          Last updated: {new Date(repo.updated_at).toLocaleDateString(undefined, {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                          })}
                         </Typography>
 
                         <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>

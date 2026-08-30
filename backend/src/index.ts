@@ -65,6 +65,7 @@ app.get('/api/search', async (req, res) => {
         html_url: item.html_url,
         stargazers_count: item.stargazers_count,
         language: item.language,
+        updated_at: item.updated_at,
         owner: {
           login: item.owner?.login,
           avatar_url: item.owner?.avatar_url
