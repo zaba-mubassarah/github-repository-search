@@ -1,38 +1,62 @@
 # GitHub Repository Search
 
-This repository contains a small full-stack application for searching public GitHub repositories.
+This project is a small full-stack application for searching public GitHub repositories.
 
-## Architecture
+## Technologies used
 
 - Frontend: React + TypeScript + Vite + MUI 5 + Axios
 - Backend: Node.js + Express + TypeScript
-- Communication: the frontend calls the local backend API, and the backend proxies requests to the public GitHub Search API
+- API integration: GitHub Repository Search API
+- Caching: in-memory backend cache
 
-### Folder layout
+## Project structure
 
-- `frontend/` – user interface and search experience
-- `backend/` – API server and GitHub integration
+- `frontend/` – React application
+- `backend/` – Express API server
 
 ## Features
 
-- Repository search by keyword
-- Debounced search behavior in the UI
-- Pagination support
+- Search public GitHub repositories
+- Debounced search behavior
+- Pagination
 - Loading, empty, and error states
-- Asynchronous request handling
-- In-memory cache on the backend to reduce repeated GitHub requests
+- Backend validation and API error handling
+- In-memory caching for repeated requests
+- Race-condition protection for stale async requests
 
 ## Getting started
 
-1. Install dependencies in each app
+1. Install dependencies:
    - `cd backend && npm install`
    - `cd frontend && npm install`
-2. Start the backend
+
+2. Start the backend:
    - `cd backend && npm run dev`
-3. Start the frontend
+
+3. Start the frontend:
    - `cd frontend && npm run dev`
-4. Open the frontend in the browser and search public repositories
+
+4. Open the frontend app in the browser and search for repositories such as:
+   - `laravel`
+   - `react`
+   - `node`
+
+## Backend API
+
+The frontend communicates with the backend, which then calls the GitHub Search API.
+
+Example endpoint:
+- `GET /api/repositories?q=laravel&page=1&perPage=10`
 
 ## Notes
 
-This setup is intentionally lightweight and appropriate for a 1.5–2 hour technical assessment without unnecessary abstraction or over-engineering.
+This implementation is intentionally lightweight and focused on the core assessment requirements:
+- clean frontend/backend separation
+- safe async handling
+- API integration
+- pagination
+- real-world error handling
+
+## Handling stale async responses
+
+To avoid older requests overwriting newer results, the frontend tracks an internal cancellation flag inside the effect that fetches repositories. If a previous request resolves after a newer one, it is ignored, ensuring the latest search results remain visible.
